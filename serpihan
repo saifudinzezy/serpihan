@@ -1,0 +1,327 @@
+<template>
+  <v-app id="inspire">
+    <v-content>
+      <v-container>
+        <v-row align="center" justify="center">
+          <v-col cols="12" sm="12" md="12" class="py-0 px-0 pr-0">
+            <v-card>
+              <v-toolbar color="green" dark flat>
+                <v-btn icon @click="linkRoute('landingfirst')">
+                  <v-icon>fas fa-angle-left</v-icon>
+                </v-btn>
+                <v-toolbar-title>Daftar Akun</v-toolbar-title>
+                <div class="flex-grow-1"></div>
+              </v-toolbar>
+
+              <v-card-text>
+                <!-- https://vuetifyjs.com/en/components/text-fields#text-fields -->
+                <v-form>
+                  <v-row class="12" sm="8" md="4">
+                    <v-col cols="4"></v-col>
+                    <v-col cols="4">
+                      <v-img
+                        :src="image"
+                        :lazy-src="image"
+                        aspect-ratio="1"
+                        max-width="500"
+                        max-height="300"
+                      ></v-img>
+                      <p class="text-center">versi.1.1.1</p>
+                    </v-col>
+                    <v-col cols="4"></v-col>
+
+                    <v-col cols="12" class="green--text">
+                      <h3 class="text-center">Temukan pekerja dengan cepat dan tepat bersama kami.</h3>
+                    </v-col>
+                  </v-row>
+
+                  <v-text-field
+                    color="green"
+                    label="Pekerjaan apa yang Anda butuhkan ?"
+                    multiple
+                    type="text"
+                    v-model="fullname"
+                    outlined
+                    :show-size="1000"
+                  ></v-text-field>
+
+                  <v-text-field
+                    color="green"
+                    label="Jumlah total"
+                    multiple
+                    type="number"
+                    outlined
+                    :show-size="1000"
+                  ></v-text-field>
+
+                  <v-text-field
+                    color="green"
+                    label="Kapan Anda butuh?"
+                    multiple
+                    type="text"
+                    outlined
+                    :show-size="1000"
+                  ></v-text-field>
+
+                  <hr />
+
+                  <h3
+                    class="text-center green--text marginTop marginBottom"
+                  >Mari mulai proses pencarian pekerja.</h3>
+
+                  <v-text-field
+                    color="green"
+                    label="Nama Anda"
+                    multiple
+                    type="text"
+                    outlined
+                    :show-size="1000"
+                  ></v-text-field>
+
+                  <v-text-field
+                    color="green"
+                    label="Jabatan"
+                    multiple
+                    type="text"
+                    outlined
+                    :show-size="1000"
+                  ></v-text-field>
+
+                  <v-row class="12" sm="8" md="4">
+                    <v-col cols="8">
+                      <v-text-field
+                        color="green"
+                        label="Nomer Kantor"
+                        multiple
+                        type="number"
+                        v-model="phone_number"
+                        outlined
+                        :show-size="1000"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="4">
+                      <v-text-field
+                        color="green"
+                        label="Ext."
+                        multiple
+                        type="number"
+                        v-model="phone_number"
+                        outlined
+                        :show-size="1000"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+
+                  <v-text-field
+                    color="green"
+                    label="Nomer HP"
+                    multiple
+                    type="number"
+                    outlined
+                    :show-size="1000"
+                  ></v-text-field>
+
+                  <v-text-field
+                    color="green"
+                    label="Email"
+                    multiple
+                    type="email"
+                    v-model="email"
+                    outlined
+                    :show-size="1000"
+                  ></v-text-field>
+
+                  <v-text-field
+                    :append-icon="pas1 ? 'fas fa-eye' : 'fas fa-eye-slash'"
+                    :rules="[rules.required, rules.min]"
+                    :type="pas1 ? 'text' : 'password'"
+                    v-model="password"
+                    color="green"
+                    outlined
+                    label="Kata Sandi"
+                    class="input-group--focused"
+                    @click:append="pas1 = !pas1"
+                  ></v-text-field>
+
+                  <v-text-field
+                    :append-icon="pas2 ? 'fas fa-eye' : 'fas fa-eye-slash'"
+                    :rules="[rules.required, passwordConfirmationRule, rules.min]"
+                    :type="pas2 ? 'text' : 'password'"
+                    v-model="re_password"
+                    color="green"
+                    outlined
+                    label="Konfirmasi Kata Sandi"
+                    class="input-group--focused"
+                    @click:append="pas2 = !pas2"
+                  ></v-text-field>
+
+                  <v-text-field
+                    color="green"
+                    label="Nama Perusahaan"
+                    multiple
+                    type="text"
+                    outlined
+                    :show-size="1000"
+                  ></v-text-field>
+
+                  <v-text-field
+                    color="green"
+                    label="Alamat Perusahaan"
+                    multiple
+                    type="text"
+                    outlined
+                    :show-size="1000"
+                  ></v-text-field>
+
+                  <v-btn large class="buttonlogin" color="green" @click="confirm()">Lanjut</v-btn>
+                </v-form>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+
+        <!-- confirm -->
+        <v-row justify="center">
+          <v-dialog v-model="dialog" max-width="290">
+            <v-card>
+              <v-card-title class="headline"></v-card-title>
+
+              <v-card-text class="text-center black--text">
+                <h2>
+                  <p>Terima Kasih sudah mendaftar di TEMU.</p>
+                </h2>
+                <p>Kami akan segera menghubungi Anda.</p>
+                <p>Jika anda membutuhkan pekerja sekarang, silahkan klik tombol dibawah.</p>
+
+                <div class="flex-grow-1"></div>
+                <v-btn color="orange" class="black--text text-center" :to="'/home'">Lanjut</v-btn>
+                <div class="flex-grow-1"></div>
+
+                <p class="marginTop">Aplikasi <b>TEMU Kerja</b> hanya ditunjukan untuk pencari kerja.</p>
+                <p>
+                  Penyedia kerja akan dilayani melalui <b>Website</b>, atau kontak kami ke sini:
+                  <b>(021)27519447</b>
+                </p>
+              </v-card-text>          
+            </v-card>
+          </v-dialog>
+        </v-row>
+      </v-container>
+    </v-content>
+  </v-app>
+</template>
+
+<script>
+// https://stackoverflow.com/questions/56642635/how-to-add-password-matching-validation-in-vuetify
+import RegisterService from "@/services/RegisterService";
+
+export default {
+  data: () => ({
+    image: require("@/assets/temu.png"),
+    dialog: false,
+    fullname: "",
+    phone_number: "",
+    email: "",
+    password: "",
+    re_password: "",
+    cek: false,
+    cek_notif: false,
+    pas1: false,
+    pas2: false,
+    rules: {
+      required: value => !!value || "Password harus di isi!",
+      min: v => v.length >= 6 || "Password minimal 6 karakter",
+      emailMatch: () => "The email and password you entered don't match"
+    }
+  }),
+
+  computed: {
+    passwordConfirmationRule() {
+      return () => this.password === this.re_password || "Password tidak sama!";
+    },
+    checklist() {
+      console.log(this.cek);
+      if (this.cek) {
+        this.cek_notif = false;
+      } else {
+        this.cek_notif = true;
+      }
+    }
+  },
+
+  methods: {
+    confirm() {
+      this.dialog = true;
+    },
+    linkRoute(route) {
+      this.$router.push({ path: "/" + route });
+    },
+    cekPassword(pas1, pas2) {
+      if (pas1 === pas2) {
+        //jika pas sama
+        console.log("pass sama");
+        if (this.cek == false) {
+          //condisi dicek
+          console.log("syarat dan ketentuan");
+          this.cek_notif = true;
+        } else {
+          console.log("ok");
+          this.register();
+        }
+      } else {
+        console.log("pass tidak sama");
+      }
+    },
+
+    register() {
+      const data = {
+        fullname: this.fullname,
+        phone_number: this.phone_number,
+        email: this.email,
+        password: this.password
+      };
+
+      try {
+        RegisterService.registerAccount(data).then(result => {
+          //then = utk get nilai js promise
+          const getData = result.data; //simpan respon dari server
+          // console.log(getData.data[1].isNew)
+
+          if (getData.status) {
+            //ambil nilai status (0 = false, 1 = true)
+            //code
+            if (getData.data[1].isNew) {
+              //cek data isNew(false = sdh terdaftar, true = belum terdaftar)
+              //code
+              this.linkRoute(""); //redirect ke halaman login
+            } else {
+              console.log("data sudah terdaftar"); //notif
+            }
+          } else {
+            console.log(getData.message); //error response 500
+          }
+        });
+      } catch (error) {}
+    }
+  }
+};
+</script>
+
+<style scoped>
+.marginTop {
+  margin-top: 20px;
+}
+
+.marginBottom {
+  margin-bottom: 40px;
+}
+
+.marginRight {
+  margin-right: 10px;
+}
+
+a {
+  text-decoration: none;
+}
+</style>
